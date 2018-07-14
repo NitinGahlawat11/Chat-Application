@@ -13,4 +13,22 @@ display();
 result.append(`<li>${data}</li>`);
     })
 
+function render(data){
+        data.forEach(function (d) {
+result.append(`<li>${d}</li>`);
+        })
+        
+}
+
+function display() {
+        socket.on('ms',function (data) {
+            render(data);
+
+        })
+
+}
+
+
+
+
 });
