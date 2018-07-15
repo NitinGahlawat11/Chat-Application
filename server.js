@@ -1,28 +1,42 @@
-const http = require('http');
-const express = require('express');
-const app = express();
-const socketServer = http.Server(app);
-const socket = require('socket.io');
-var messages=[];
-const io = socket(socketServer);
+var express = require('express');
+var app = express();
+
+var http = require('http');
+var server = http.createServer(app);
+
+var socket = require('socket.io');
+
+var io = socket(server);
+var msgs = [];
+var connected_users={};
+io.on('connection', function(socket){
+    console.log('connection established.');
+    socket.on('receive_message', function(data) {
+
+        msgs.push(data);
+
+        io.emit('get', data, connected_users);
+    });
+    socket.emit('all', msgs, connected_users);
+
+    socket.on('username', function(data){
+        console.log(data, socket.id);
+        connected_users[socket.id]=data;
+        console.log('connected_users= '+connected_users);
+    });
+    socket.on('disconnect', function(){
+        delete  connected_users[socket.id];
+        console.log(connected_users);
+        console.log('disconnected');
+    });
+
+
+});
+
 
 app.use('/', express.static('public'));
-
-io.on('connection',function (sk) {  // connection is a parameter already present in socket.io which will fire when connection has been made
-    sk.on('message',function (data) {
-messages.push(data);
-        io.emit('show',data); // use io.emit if you want sender too, to receive the message otherwise use sk.broadcast
-    })
-sk.emit('ms',messages);
+server.listen(5000, function(){
+    console.log("server is listening on port 5000");
 });
 
-//console.log(io);
-// const server = http.createServer((req,res)=> {
-//     res.write("Hello World");
-//     res.end();
-// });
 
-socketServer.listen(8080, function(){
-    console.log("Server is listening on port 8080");
-
-});
