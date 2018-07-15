@@ -35,7 +35,7 @@ io.on('connection', function(socket){
 
 
 app.use('/', express.static('public'));
-server.listen(5000, function(){
+server.listen(process.env.PORT || 3000, function(){
     console.log("server is listening on port 5000");
 });
 
