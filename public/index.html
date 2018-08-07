@@ -2,24 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Socket</title>
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Chatroom</h1>
-<div id="input-section">
-    <input placeholder="Enter message here" type="text" id="inp">
-    <button id="btn">Send</button>
+<div id="mario-chat">
+    <h2>Mario Chat</h2>
+    <div id="chat-window">
+        <div id="output"></div>
+        <div id="feedback"></div>
+    </div>
+    <input id="handle" type="text" placeholder="Handle" />
+    <input id="message" type="text" placeholder="Message" />
+    <button id="send">Send</button>
 </div>
-<div id="messages-section">
-    <ul style="list-style:none;" id="messages"></ul>
-</div>
-<div id="user-section">
-    <h3>Connected users</h3>
-    <ul id="users"></ul>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="app.js"></script>
+<script src="/main.js"></script>
 </body>
 </html>
